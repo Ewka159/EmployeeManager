@@ -32,14 +32,14 @@ public class EmployeeResource {
 
     @PostMapping
     public ResponseEntity<Employee> addEmployee(@RequestBody Employee employee) {
-        Employee employee1 =    employeeService.addEmployee(employee);
-        return new ResponseEntity<>(employee, HttpStatus.CREATED);
+        Employee employee1 = employeeService.addEmployee(employee);
+        return new ResponseEntity<>(employee1, HttpStatus.CREATED);
     }
 
-    @PutMapping
-    public ResponseEntity<Employee> updateEmployee(@RequestBody Employee employee) {
-        Employee employee1 =    employeeService.updateEmployee(employee);
-        return new ResponseEntity<>(employee, HttpStatus.OK);
+    @PutMapping("/{id}")
+    public ResponseEntity<Employee> updateEmployee(@RequestBody Employee employee, @PathVariable("id") Long id) {
+        Employee employee1 = employeeService.updateEmployee(id, employee);
+        return new ResponseEntity<>(employee1, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
