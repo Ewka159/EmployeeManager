@@ -11,10 +11,10 @@ import { NgForm } from '@angular/forms';
 })
 export class AppComponent implements OnInit {
   public employees: Employee[];
-  public editEmployee: Employee;
-  public deleteEmployee: Employee;
+  public editEmployee: Employee | null; 
+  public deleteEmployee: Employee | null;
 
-  constructor(private employeeService: EmployeeService){}
+  constructor(public employeeService: EmployeeService){}
 
   ngOnInit() {
     this.getEmployees();
@@ -33,7 +33,7 @@ export class AppComponent implements OnInit {
   }
 
   public onAddEmloyee(addForm: NgForm): void {
-    document.getElementById('add-employee-form').click();
+    document.getElementById('add-employee-form')?.click();
     this.employeeService.addEmployee(addForm.value).subscribe(
       (response: Employee) => {
         console.log(response);
@@ -59,8 +59,8 @@ export class AppComponent implements OnInit {
     );
   }
 
-  public onDeleteEmloyee(employeeId: number): void {
-    this.employeeService.deleteEmployee(employeeId).subscribe(
+  public onDeleteEmloyee(employee: number): void {
+    this.employeeService.deleteEmployee(employee).subscribe(
       (response: void) => {
         console.log(response);
         this.getEmployees();
@@ -88,7 +88,7 @@ export class AppComponent implements OnInit {
     }
   }
 
-  public onOpenModal(employee: Employee, mode: string): void {
+  public onOpenModal(employee: Employee | null, mode: string): void {
     const container = document.getElementById('main-container');
     const button = document.createElement('button');
     button.type = 'button';
@@ -105,7 +105,7 @@ export class AppComponent implements OnInit {
       this.deleteEmployee = employee;
       button.setAttribute('data-target', '#deleteEmployeeModal');
     }
-    container.appendChild(button);
+    container?.appendChild(button);
     button.click();
   }
 
